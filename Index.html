@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzFlMjkzYiIvPgogIDxjaXJjbGUgY3g9IjEwIiBjeT0iMTAiIHI9IjUiIGZpbGw9IiNiNTY1N2EiIG9wYWNpdHk9IjAuOSIvPgogIDxjaXJjbGUgY3g9IjIyIiBjeT0iMTAiIHI9IjUiIGZpbGw9IiM4YTZkM2EiIG9wYWNpdHk9IjAuOSIvPgogIDxjaXJjbGUgY3g9IjEwIiBjeT0iMjIiIHI9IjUiIGZpbGw9IiMzYTdkNmEiIG9wYWNpdHk9IjAuOSIvPgogIDxjaXJjbGUgY3g9IjIyIiBjeT0iMjIiIHI9IjUiIGZpbGw9IiM1YTVlOGEiIG9wYWNpdHk9IjAuOSIvPgogIDxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjIuNSIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuNiIvPgo8L3N2Zz4=">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+    <title>Your Masterclass Calendar - Dean Levick</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #e8eceb;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* Step 2: Recommended Path */
+        .recommended-path {
+            background: linear-gradient(135deg, #0d1828 0%, #122040 60%, #1a2d50 100%);
+            color: white;
+            border-radius: 14px;
+            padding: 36px 40px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(180, 148, 80, 0.35);
+            box-shadow: 0 4px 24px rgba(10, 20, 40, 0.25);
+        }
+
+        .recommended-path h2 {
+            font-family: "DM Serif Display", serif;
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .recommended-path p {
+            font-size: 14px;
+            opacity: 0.75;
+            line-height: 1.75;
+            max-width: 600px;
+            margin-bottom: 24px;
+        }
+
+        .path-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .path-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.22);
+            color: white;
+            padding: 9px 16px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .path-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(180,148,80,0.5); }
+
+        .step-num {
+            background: rgba(180,148,80,0.25);
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Step 3: Multi-booking Nudge */
+        .multi-booking-nudge {
+            background: linear-gradient(135deg, #111f35 0%, #1a2d50 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 24px 32px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .nudge-text { flex: 1; }
+        .nudge-text h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+        .nudge-text p { font-size: 13px; opacity: 0.72; line-height: 1.65; }
+
+        .nudge-stat {
+            flex-shrink: 0;
+            text-align: center;
+            background: rgba(255,255,255,0.08);
+            padding: 16px 24px;
+            border-radius: 10px;
+            min-width: 90px;
+        }
+        .stat-num { font-size: 32px; font-weight: 700; display: block; }
+        .stat-label { font-size: 10px; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.5px; }
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+            padding: 48px 44px;
+            background: #f4f7f6;
+            border-radius: 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        
+
+        
+        .header h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 28px;
+            margin-bottom: 14px;
+            color: #1a1e1c;
+            line-height: 1.35;
+        }
+        
+        .header p + p { margin-top: 16px; }
+        .header p {
+            font-size: 17px;
+            color: #4e5852;
+            max-width: 680px;
+            margin: 0 auto;
+            line-height: 1.75;
+        }
+        
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+            padding: 18px 22px;
+            background: #f4f7f6;
+            border-radius: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        
+        .filter-btn {
+            padding: 9px 18px;
+            border: 1.5px solid #cdd5d2;
+            background: #f4f7f6;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.15s;
+            color: #3a4440;
+            font-family: inherit;
+        }
+        
+        .filter-btn:hover { border-color: #8a9e98; color: #1a1e1c; }
+        .filter-btn.all.active { background: #1a2a4a; border-color: #1a2a4a; color: white; }
+        .filter-btn.relationships.active { background: #f0e0e4; border-color: #b5657a; color: #7a3a4a; }
+        .filter-btn.health.active { background: #d6eae5; border-color: #3a7d6a; color: #1e4d42; }
+        .filter-btn.vocation.active { background: #ede4d4; border-color: #8a6d3a; color: #5a3e1a; }
+        .filter-btn.timemoney.active { background: #e0e0ee; border-color: #5a5e8a; color: #2e2e5a; }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+        }
+        
+        .month-group {
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .month-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .month-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1e1c;
+        }
+        
+        .event-badge {
+            background: #f3f4f6;
+            color: #6b7280;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .masterclasses {
+            display: grid;
+            gap: 16px;
+        }
+        
+        /* Masterclass Card */
+        .masterclass-card {
+            background: #f4f7f6;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            border-left: 4px solid #cdd5d2;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        
+        .masterclass-card:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.09);
+            transform: translateY(-2px);
+        }
+        
+        .masterclass-card.relationships { border-left-color: #b5657a; }
+        .masterclass-card.health { border-left-color: #3a7d6a; }
+        .masterclass-card.vocation { border-left-color: #8a6d3a; }
+        .masterclass-card.timemoney { border-left-color: #5a5e8a; }
+        
+        .masterclass-card.purchased {
+            background: #d6eae5;
+            border-left-color: #3a7d6a;
+        }
+        
+        .card-content {
+            flex: 1;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .date-badge {
+            background: #dce5e2;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #3a4e48;
+        }
+        
+        .category-tag {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .category-tag.relationships { background: #b5657a; }
+        .category-tag.health { background: #3a7d6a; }
+        .category-tag.vocation { background: #8a6d3a; }
+        .category-tag.timemoney { background: #5a5e8a; }
+        
+        .context-tag {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            background: #dce5e2;
+            color: #3a4e48;
+        }
+        
+        .purchased-badge {
+            background: #3a7d6a;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1e1c;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .card-description {
+            font-size: 13px;
+            color: #7a8e88;
+            font-style: italic;
+            margin-top: 4px;
+        }
+        
+        .card-action {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+        
+        .price-container {
+            text-align: right;
+        }
+        
+        .price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1e1c;
+            margin-bottom: 6px;
+        }
+        
+        .action-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .action-btn.primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: #2563eb;
+        }
+
+        .action-btn.purchased {
+            background: #3a7d6a;
+            color: white;
+            cursor: default;
+        }
+
+        .action-btn.eventbrite {
+            background: #1a2a4a;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .action-btn.eventbrite:hover {
+            background: #0d1a30;
+            transform: translateY(-1px);
+        }
+        
+
+        
+        @media (max-width: 768px) {
+            .header { padding: 28px 20px; }
+            .header h1 { font-size: 22px; }
+            .header p + p { margin-top: 16px; }
+        .header p { font-size: 14px; }
+            .recommended-path { padding: 24px 20px; }
+            .recommended-path h2 { font-size: 18px; }
+            .path-buttons { flex-direction: column; }
+            .path-btn { width: 100%; }
+            .multi-booking-nudge { flex-direction: column; gap: 16px; }
+            .nudge-stat { width: 100%; }
+            .masterclass-card { flex-direction: column; }
+            .card-action { align-items: flex-start; width: 100%; }
+            .action-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>You have already seen what honest examination of one quadrant can do.</h1>
+            <p>Something shifts when you look clearly at one area of your life. Your awareness sharpens. You begin to see patterns that were running quietly in the background. Once you see them, you cannot pretend they are not there.</p>
+            <p>At this point, most leaders mistake insight for completion. These sessions are designed so you continue the work instead of stopping at awareness. Your health shapes how you lead. Your relationships influence how you make decisions. Your vocation affects how you measure your worth. Your time and money choices reinforce all of it.</p>
+            <p>This calendar follows the natural pressure cycles of your year so these intersections are addressed deliberately and at the right moment. If one masterclass gave you clarity, continuity will give you integration. This is how you build momentum instead of losing it.</p>
+        </div>
+        
+        <!-- Category Filter -->
+        <div class="category-filter">
+            <button class="filter-btn all active" onclick="filterCategory('all')">All Masterclasses</button>
+            <button class="filter-btn relationships" onclick="filterCategory('relationships')">Love & Relationships</button>
+            <button class="filter-btn health" onclick="filterCategory('health')">Health & Wellbeing</button>
+            <button class="filter-btn vocation" onclick="filterCategory('vocation')">Vocation & Purpose</button>
+            <button class="filter-btn timemoney" onclick="filterCategory('timemoney')">Time & Money Freedom</button>
+        </div>
+        
+        <!-- Step 2: Recommended Path -->
+        <div class="recommended-path">
+            <h2>Start Where The Pattern Is Most Visible</h2>
+            <p>Begin where your attention keeps returning. For most leaders, that is Vocation, because performance and identity carry the most visible weight there. Once that layer is steadied, move forward deliberately through the remaining quadrants.</p>
+            <div class="path-buttons">
+                <button class="path-btn" onclick="filterCategory('vocation')"><span class="step-num">1</span> Vocation & Purpose</button>
+                <button class="path-btn" onclick="filterCategory('health')"><span class="step-num">2</span> Health & Wellbeing</button>
+                <button class="path-btn" onclick="filterCategory('relationships')"><span class="step-num">3</span> Love & Relationships</button>
+                <button class="path-btn" onclick="filterCategory('timemoney')"><span class="step-num">4</span> Time & Money Freedom</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Multi-booking Nudge -->
+        <div class="multi-booking-nudge">
+            <div class="nudge-text">
+                <h3>Single sessions create insight. Multiple sessions create change.</h3>
+                <p>Leaders who work across more than one quadrant in the same period experience measurably deeper integration. Consider securing two or more sessions now.</p>
+            </div>
+            <div class="nudge-stat">
+                <span class="stat-num">2×</span>
+                <span class="stat-label">deeper integration</span>
+            </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline" id="timeline">
+            <!-- March -->
+            <div class="month-group" data-month="march">
+                <div class="month-header">
+                    <h2 class="month-title">March</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Mar 16</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">You Are More Than Capable. So Why Do You Still Hold Back?</h3>
+                            <p class="card-description">What holds you back at work often shows up in how you relate at home. Consider pairing with Love &amp; Relationships.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Mar 16</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Your Ideas Get Softer the More You Read the Room</h3>
+                            <p class="card-description">The pattern of softening yourself in relationships mirrors what happens in your career. Consider pairing with Vocation &amp; Purpose.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Mar 17</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Carrying It All Without Saying Anything. That Is Why You Are Exhausted.</h3>
+                            <p class="card-description">Carrying things silently affects how close you let others get. Consider pairing with Love &amp; Relationships.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Mar 17</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Have Earned It. So Why Do You Keep Delaying the Ask?</h3>
+                            <p class="card-description">Delaying what you've earned is often about how you measure your own value. Consider pairing with Vocation &amp; Purpose.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="https://www.eventbrite.com.au/e/why-asking-for-more-becomes-harder-as-responsibility-grows-tickets-1983020178736?aff=oddtdtcreator" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- April -->
+            <div class="month-group" data-month="april">
+                <div class="month-header">
+                    <h2 class="month-title">April</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Apr 15</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">You Question Yourself Even When There Is No Reason To</h3>
+                            <p class="card-description">Self-doubt in your body often runs parallel to self-doubt at work. Consider pairing with Vocation &amp; Purpose.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Apr 15</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Your Responsibility Keeps Growing. Your Confidence Doesn't. Why?</h3>
+                            <p class="card-description">Responsibility without confidence is a load the body carries. Consider pairing with Health &amp; Wellbeing.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Thu, Apr 16</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Ask for Reassurance, But You Don't Fully Trust It When You Get It</h3>
+                            <p class="card-description">Needing reassurance you cannot fully receive is a nervous system pattern. Consider pairing with Health &amp; Wellbeing.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Thu, Apr 16</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Over-Prepare Because Deciding Feels Risky</h3>
+                            <p class="card-description">Over-preparation is often about protecting how others see your competence. Consider pairing with Vocation &amp; Purpose.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- May -->
+            <div class="month-group" data-month="may">
+                <div class="month-header">
+                    <h2 class="month-title">May</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, May 18</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Care for Everyone Else. What Is Left for You?</h3>
+                            <p class="card-description">The habit of giving to everyone else usually begins in your closest relationships. Consider pairing with Love &amp; Relationships.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, May 18</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">When Support Stops Feeling Like a Choice and Starts Feeling Expected</h3>
+                            <p class="card-description">When support feels obligatory, your time and energy start being spent rather than given. Consider pairing with Time &amp; Money Freedom.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, May 19</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Work Feels Like the Only Place Where Your Value Is Clear</h3>
+                            <p class="card-description">Tying your worth to work performance changes how present you are at home. Consider pairing with Love &amp; Relationships.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, May 19</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Your Time Gets Spent, But You Are Not the One Choosing How</h3>
+                            <p class="card-description">Time you don't choose is often being used to build someone else's outcomes. Consider pairing with Vocation &amp; Purpose.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- June -->
+            <div class="month-group" data-month="june">
+                <div class="month-header">
+                    <h2 class="month-title">June</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Jun 15</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Money Pressure Feels Personal, Even When It Is Just Business</h3>
+                            <p class="card-description">Financial pressure is rarely just financial. It lives in the body first. Consider pairing with Health &amp; Wellbeing.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Jun 15</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">You Start Measuring Your Worth by Outcomes at This Time of Year</h3>
+                            <p class="card-description">Measuring worth by outcomes distorts how you make financial decisions. Consider pairing with Time &amp; Money Freedom.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Jun 16</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Financial Stress Doesn't Show Up in Your Bank Account First. It Shows Up in Your Body</h3>
+                            <p class="card-description">The stress showing up in your body has a financial pattern underneath it. Consider pairing with Time &amp; Money Freedom.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Jun 16</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">EOFY Pressure Changes How You Show Up at Home</h3>
+                            <p class="card-description">The pressure you bring home originates at work. Consider pairing with Vocation &amp; Purpose.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- July -->
+            <div class="month-group" data-month="july">
+                <div class="month-header">
+                    <h2 class="month-title">July</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Jul 15</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">New Plans, Old Patterns. Why That Keeps Happening</h3>
+                            <p class="card-description">Old patterns resurface during transitions and the body responds before the mind does. Consider pairing with Health &amp; Wellbeing.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Jul 15</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Fresh Goals Are Supposed to Feel Motivating. Yours Feel Heavy.</h3>
+                            <p class="card-description">Goals feel heavy when the body and mind haven't recovered from the last push. Consider pairing with Health &amp; Wellbeing.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Thu, Jul 16</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Took Time Off. The Motivation Still Has Not Come Back.</h3>
+                            <p class="card-description">When rest doesn't restore you, your relationship with work identity may be the reason. Consider pairing with Vocation &amp; Purpose.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Thu, Jul 16</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Change Creates Distance Before It Creates Alignment</h3>
+                            <p class="card-description">Transitions at work are often the source of distance in relationships. Consider pairing with Vocation &amp; Purpose.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- August -->
+            <div class="month-group" data-month="august">
+                <div class="month-header">
+                    <h2 class="month-title">August</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Aug 17</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Finally Have Time to Relax. So Why Can't You?</h3>
+                            <p class="card-description">An inability to relax is often an inability to stop treating time as something to spend. Consider pairing with Time &amp; Money Freedom.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Aug 17</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Stay Busy Even Around the People You Love Most</h3>
+                            <p class="card-description">Staying busy around the people you love is often a regulation pattern. Consider pairing with Health &amp; Wellbeing.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Aug 18</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Slowing Down at Work Feels Risky, Even When You Know You Need To</h3>
+                            <p class="card-description">If slowing down feels risky, examine what you believe rest costs you. Consider pairing with Time &amp; Money Freedom.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Aug 18</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Rest Feels Like You Are Wasting Time</h3>
+                            <p class="card-description">Treating rest as waste is a belief that your body eventually overrules. Consider pairing with Health &amp; Wellbeing.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- September -->
+            <div class="month-group" data-month="september">
+                <div class="month-header">
+                    <h2 class="month-title">September</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Sep 15</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Being the Strong One Makes It Hard to Admit You Are Not Okay</h3>
+                            <p class="card-description">Being the strong one requires suppression, and suppression has a physical cost. Consider pairing with Health &amp; Wellbeing.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Sep 15</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Ignore the Signals Until They Are Too Loud to Miss</h3>
+                            <p class="card-description">Ignoring your own signals affects how attuned you are to the people around you. Consider pairing with Love &amp; Relationships.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Sep 16</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">When Responsibility Becomes Who You Are, Not Just What You Do</h3>
+                            <p class="card-description">When responsibility becomes identity, relationships start to feel like obligations. Consider pairing with Love &amp; Relationships.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Sep 16</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">You Keep Putting Yourself Last. And You Know It</h3>
+                            <p class="card-description">Consistently putting yourself last is usually reinforced in close relationships. Consider pairing with Love &amp; Relationships.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- October -->
+            <div class="month-group" data-month="october">
+                <div class="month-header">
+                    <h2 class="month-title">October</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Oct 19</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">You Function Well on the Outside. Inside, You Are Worn Down.</h3>
+                            <p class="card-description">Performing well at work while depleted inside is an unsustainable pattern. Consider pairing with Vocation &amp; Purpose.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Oct 19</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Your Confidence Feels Conditional, Even When the Results Say Otherwise</h3>
+                            <p class="card-description">Conditional confidence often means you're still looking outside yourself for validation. Consider pairing with Love &amp; Relationships.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Oct 20</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Hide More Than You Think You Do</h3>
+                            <p class="card-description">Concealment has a physical cost that accumulates over time. Consider pairing with Health &amp; Wellbeing.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Oct 20</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Avoid Looking Too Closely, Because You Already Know What You Will Find</h3>
+                            <p class="card-description">Avoiding financial clarity is often connected to avoiding clarity about what you want professionally. Consider pairing with Vocation &amp; Purpose.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- November -->
+            <div class="month-group" data-month="november">
+                <div class="month-header">
+                    <h2 class="month-title">November</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Nov 16</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Slowing Down Forces You to Face Questions You Have Been Avoiding</h3>
+                            <p class="card-description">The questions you've been avoiding are often about what you're worth and what you're working for. Consider pairing with Time &amp; Money Freedom.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Nov 16</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">You Keep Deferring What Matters Most, Even Though You Know What It Is</h3>
+                            <p class="card-description">Deferring what matters most financially often mirrors deferring presence in relationships. Consider pairing with Love &amp; Relationships.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Nov 17</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Stillness Doesn't Feel Peaceful. It Feels Uncomfortable.</h3>
+                            <p class="card-description">Discomfort with stillness usually means your sense of worth is still tied to output. Consider pairing with Vocation &amp; Purpose.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Nov 17</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Reflection Feels Isolating When You Do It Alone</h3>
+                            <p class="card-description">Chronic isolation in reflection creates a stress response the body registers. Consider pairing with Health &amp; Wellbeing.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- December -->
+            <div class="month-group" data-month="december">
+                <div class="month-header">
+                    <h2 class="month-title">December</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Dec 15</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Being Together Can Feel More Draining Than Being Alone</h3>
+                            <p class="card-description">When presence feels draining rather than restoring, your energy is already depleted elsewhere. Consider pairing with Time &amp; Money Freedom.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Dec 15</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Feel Exhausted Before the Break Even Starts</h3>
+                            <p class="card-description">Arriving exhausted to a break affects how available you are to the people you're with. Consider pairing with Love &amp; Relationships.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Dec 16</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Your Achievements Don't Land the Way You Expected Them To</h3>
+                            <p class="card-description">If achievements don't satisfy, it's worth examining what you believe they were supposed to buy. Consider pairing with Time &amp; Money Freedom.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Dec 16</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Letting Go Feels Harder Than Holding On, Even When Holding On Hurts</h3>
+                            <p class="card-description">Difficulty letting go is held in the body as much as in the mind. Consider pairing with Health &amp; Wellbeing.</p></div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+
+    
+    <script>
+
+        // ─── CATEGORY FILTER ──────────────────────────────────────────────────
+        function filterCategory(category) {
+            document.querySelectorAll('.filter-btn, .quad-pill').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.classList.contains(category) || (category === 'all' && btn.classList.contains('all'))) {
+                    btn.classList.add('active');
+                }
+            });
+            const cards = document.querySelectorAll('.masterclass-card:not(.purchased)');
+            cards.forEach(card => {
+                card.style.display = (category === 'all' || card.dataset.category === category) ? 'flex' : 'none';
+            });
+        }
+
+        // ─── EVENTBRITE TRACKING (OPTIONAL) ──────────────────────────────────
+        // Called when any Register button is clicked.
+        // You can hook this into Google Analytics or any tracking tool.
+        function trackRegister(link) {
+            const card = link.closest('.masterclass-card');
+            const title = card ? card.querySelector('.card-title').textContent : 'Unknown';
+            // Optional: send to analytics
+            // gtag('event', 'register_click', { session_title: title });
+            console.log('Register clicked:', title);
+        }
+
+    </script>
+</body>
+</html>
