@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
     <title>Your Masterclass Calendar - Dean Levick</title>
     <style>
         * {
@@ -12,10 +13,10 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
             color: #1a1a1a;
-            background: #fafafa;
+            background: #e8eceb;
         }
         
         .container {
@@ -24,140 +25,146 @@
             padding: 40px 20px;
         }
         
-        /* Progression Banner */
-        .progression-banner {
-            background: #f8f7ff;
-            border: 1.5px solid #e0dbff;
-            border-radius: 12px;
-            padding: 28px 36px;
-            margin-bottom: 40px;
+        /* Step 2: Recommended Path */
+        .recommended-path {
+            background: #0d1f13;
+            color: white;
+            border-radius: 14px;
+            padding: 36px 40px;
+            margin-bottom: 20px;
+        }
+
+        .recommended-path h2 {
+            font-family: "DM Serif Display", serif;
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .recommended-path p {
+            font-size: 14px;
+            opacity: 0.75;
+            line-height: 1.75;
+            max-width: 600px;
+            margin-bottom: 24px;
+        }
+
+        .path-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .path-btn {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 8px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.22);
+            color: white;
+            padding: 9px 16px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .path-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.4); }
+
+        .step-num {
+            background: rgba(255,255,255,0.15);
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Step 3: Multi-booking Nudge */
+        .multi-booking-nudge {
+            background: #1e293b;
+            color: white;
+            border-radius: 12px;
+            padding: 24px 32px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
             gap: 24px;
             flex-wrap: wrap;
         }
 
-        .progression-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex: 1;
-        }
+        .nudge-text { flex: 1; }
+        .nudge-text h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+        .nudge-text p { font-size: 13px; opacity: 0.72; line-height: 1.65; }
 
-        .progression-icon {
-            font-size: 36px;
+        .nudge-stat {
             flex-shrink: 0;
+            text-align: center;
+            background: rgba(255,255,255,0.08);
+            padding: 16px 24px;
+            border-radius: 10px;
+            min-width: 90px;
         }
-
-        .progression-text h3 {
-            font-size: 19px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 6px;
-        }
-
-        .progression-text p {
-            font-size: 15px;
-            color: #555;
-            line-height: 1.5;
-        }
-
-        .progression-quadrants {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .quad-pill {
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s;
-            opacity: 0.85;
-        }
-
-        .quad-pill:hover { opacity: 1; transform: translateY(-1px); }
-        .quad-pill.relationships { background: #fce7f3; color: #be185d; }
-        .quad-pill.health { background: #d1fae5; color: #065f46; }
-        .quad-pill.vocation { background: #fef3c7; color: #92400e; }
-        .quad-pill.timemoney { background: #ede9fe; color: #5b21b6; }
+        .stat-num { font-size: 32px; font-weight: 700; display: block; }
+        .stat-label { font-size: 10px; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.5px; }
         .header {
             text-align: center;
-            margin-bottom: 50px;
-            padding: 30px 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            margin-bottom: 28px;
+            padding: 48px 44px;
+            background: #f4f7f6;
+            border-radius: 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
         }
         
-        .welcome-badge {
-            display: inline-block;
-            background: #10b981;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
+
         
         .header h1 {
-            font-size: 32px;
-            margin-bottom: 12px;
-            color: #111;
+            font-family: 'DM Serif Display', serif;
+            font-size: 28px;
+            margin-bottom: 14px;
+            color: #1a1e1c;
+            line-height: 1.35;
         }
         
         .header p {
-            font-size: 18px;
-            color: #666;
-            max-width: 700px;
+            font-size: 15px;
+            color: #4e5852;
+            max-width: 680px;
             margin: 0 auto;
+            line-height: 1.75;
         }
         
         /* Category Filter */
         .category-filter {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-bottom: 40px;
-            padding: 20px;
-            background: white;
+            margin-bottom: 28px;
+            padding: 18px 22px;
+            background: #f4f7f6;
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
         }
         
         .filter-btn {
-            padding: 12px 24px;
-            border: 2px solid #e5e7eb;
-            background: white;
-            border-radius: 8px;
+            padding: 9px 18px;
+            border: 1.5px solid #cdd5d2;
+            background: #f4f7f6;
+            border-radius: 7px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 600;
-            transition: all 0.2s;
-            color: #4b5563;
+            transition: all 0.15s;
+            color: #3a4440;
+            font-family: inherit;
         }
         
-        .filter-btn:hover {
-            border-color: #3b82f6;
-            color: #3b82f6;
-        }
-        
-        .filter-btn.active {
-            background: #3b82f6;
-            border-color: #3b82f6;
-            color: white;
-        }
-        
-        .filter-btn.relationships.active { background: #ec4899; border-color: #ec4899; }
-        .filter-btn.health.active { background: #10b981; border-color: #10b981; }
-        .filter-btn.vocation.active { background: #f59e0b; border-color: #f59e0b; }
-        .filter-btn.timemoney.active { background: #8b5cf6; border-color: #8b5cf6; }
+        .filter-btn:hover { border-color: #8a9e98; color: #1a1e1c; }
+        .filter-btn.all.active { background: #0d1f13; border-color: #0d1f13; color: white; }
+        .filter-btn.relationships.active { background: #f0e0e4; border-color: #b5657a; color: #7a3a4a; }
+        .filter-btn.health.active { background: #d6eae5; border-color: #3a7d6a; color: #1e4d42; }
+        .filter-btn.vocation.active { background: #ede4d4; border-color: #8a6d3a; color: #5a3e1a; }
+        .filter-btn.timemoney.active { background: #e0e0ee; border-color: #5a5e8a; color: #2e2e5a; }
         
         /* Timeline */
         .timeline {
@@ -186,9 +193,9 @@
         }
         
         .month-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
-            color: #111;
+            color: #1a1e1c;
         }
         
         .event-badge {
@@ -207,11 +214,11 @@
         
         /* Masterclass Card */
         .masterclass-card {
-            background: white;
+            background: #f4f7f6;
             border-radius: 12px;
             padding: 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            border-left: 4px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            border-left: 4px solid #cdd5d2;
             transition: all 0.3s;
             display: flex;
             justify-content: space-between;
@@ -220,18 +227,18 @@
         }
         
         .masterclass-card:hover {
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.09);
             transform: translateY(-2px);
         }
         
-        .masterclass-card.relationships { border-left-color: #ec4899; }
-        .masterclass-card.health { border-left-color: #10b981; }
-        .masterclass-card.vocation { border-left-color: #f59e0b; }
-        .masterclass-card.timemoney { border-left-color: #8b5cf6; }
+        .masterclass-card.relationships { border-left-color: #b5657a; }
+        .masterclass-card.health { border-left-color: #3a7d6a; }
+        .masterclass-card.vocation { border-left-color: #8a6d3a; }
+        .masterclass-card.timemoney { border-left-color: #5a5e8a; }
         
         .masterclass-card.purchased {
-            background: #f0fdf4;
-            border-left-color: #10b981;
+            background: #d6eae5;
+            border-left-color: #3a7d6a;
         }
         
         .card-content {
@@ -247,12 +254,12 @@
         }
         
         .date-badge {
-            background: #f3f4f6;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 13px;
+            background: #dce5e2;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
             font-weight: 600;
-            color: #4b5563;
+            color: #3a4e48;
         }
         
         .category-tag {
@@ -263,22 +270,22 @@
             color: white;
         }
         
-        .category-tag.relationships { background: #ec4899; }
-        .category-tag.health { background: #10b981; }
-        .category-tag.vocation { background: #f59e0b; }
-        .category-tag.timemoney { background: #8b5cf6; }
+        .category-tag.relationships { background: #b5657a; }
+        .category-tag.health { background: #3a7d6a; }
+        .category-tag.vocation { background: #8a6d3a; }
+        .category-tag.timemoney { background: #5a5e8a; }
         
         .context-tag {
             padding: 4px 10px;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
-            background: #e5e7eb;
-            color: #4b5563;
+            background: #dce5e2;
+            color: #3a4e48;
         }
         
         .purchased-badge {
-            background: #10b981;
+            background: #3a7d6a;
             color: white;
             padding: 4px 10px;
             border-radius: 4px;
@@ -289,14 +296,16 @@
         .card-title {
             font-size: 18px;
             font-weight: 600;
-            color: #111;
+            color: #1a1e1c;
             margin-bottom: 8px;
             line-height: 1.4;
         }
         
         .card-description {
-            font-size: 14px;
-            color: #6b7280;
+            font-size: 13px;
+            color: #7a8e88;
+            font-style: italic;
+            margin-top: 4px;
         }
         
         .card-action {
@@ -313,8 +322,8 @@
         .price {
             font-size: 22px;
             font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 8px;
+            color: #1a1e1c;
+            margin-bottom: 6px;
         }
         
         .action-btn {
@@ -332,113 +341,45 @@
             background: #3b82f6;
             color: white;
         }
-        
+
         .action-btn.primary:hover {
             background: #2563eb;
         }
-        
+
         .action-btn.purchased {
-            background: #10b981;
+            background: #3a7d6a;
             color: white;
             cursor: default;
         }
-        
-        .action-btn.add-bundle {
-            background: #f3f4f6;
-            color: #4b5563;
-        }
-        
-        .action-btn.add-bundle:hover {
-            background: #e5e7eb;
-        }
-        
-        .action-btn.added {
-            background: #10b981;
+
+        .action-btn.eventbrite {
+            background: #1a4a2e;
             color: white;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .action-btn.eventbrite:hover {
+            background: #0d3320;
+            transform: translateY(-1px);
         }
         
-        .action-btn.added:hover {
-            background: #dc2626;
-        }
-        
-        .action-btn.added:hover::after {
-            content: " (Click to Remove)";
-            font-size: 11px;
-        }
-        
-        /* Bundle Summary Sticky */
-        .bundle-summary {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            border-top: 2px solid #e5e7eb;
-            padding: 20px;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
-            display: none;
-            z-index: 100;
-        }
-        
-        .bundle-summary.active {
-            display: block;
-        }
-        
-        .bundle-summary-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        
-        .bundle-info {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-        
-        .bundle-count {
-            font-size: 14px;
-            color: #6b7280;
-        }
-        
-        .bundle-count strong {
-            color: #111;
-            font-size: 18px;
-        }
-        
-        .checkout-btn {
-            padding: 16px 40px;
-            background: #10b981;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .checkout-btn:hover {
-            background: #059669;
-            transform: translateY(-2px);
-        }
+
         
         @media (max-width: 768px) {
-            .header h1 { font-size: 24px; }
-            .header p { font-size: 16px; }
-            .progression-banner { flex-direction: column; padding: 20px; }
-            .progression-left { flex-direction: column; text-align: center; }
-            .progression-text h3 { font-size: 16px; }
-            .progression-quadrants { justify-content: center; }
+            .header { padding: 28px 20px; }
+            .header h1 { font-size: 22px; }
+            .header p { font-size: 14px; }
+            .recommended-path { padding: 24px 20px; }
+            .recommended-path h2 { font-size: 18px; }
+            .path-buttons { flex-direction: column; }
+            .path-btn { width: 100%; }
+            .multi-booking-nudge { flex-direction: column; gap: 16px; }
+            .nudge-stat { width: 100%; }
             .masterclass-card { flex-direction: column; }
             .card-action { align-items: flex-start; width: 100%; }
             .action-btn { width: 100%; }
-            .bundle-summary-content { flex-direction: column; }
-            .checkout-btn { width: 100%; }
         }
     </style>
 </head>
@@ -446,7 +387,6 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <div class="welcome-badge">✓ Love & Relationships Masterclass Purchased</div>
             <h1>You have already seen what honest examination of one quadrant can do.</h1>
             <p>Something shifts when you look clearly at one area of your life. Your awareness sharpens. You begin to see patterns that were running quietly in the background. Once you see them, you cannot pretend they are not there. At this point, most leaders mistake insight for completion. These sessions are designed so you continue the work instead of stopping at awareness. Your health shapes how you lead. Your relationships influence how you make decisions. Your vocation affects how you measure your worth. Your time and money choices reinforce all of it. This calendar follows the natural pressure cycles of your year so these intersections are addressed deliberately and at the right moment. If one masterclass gave you clarity, continuity will give you integration. This is how you build momentum instead of losing it.</p>
         </div>
@@ -460,20 +400,27 @@
             <button class="filter-btn timemoney" onclick="filterCategory('timemoney')">Time & Money Freedom</button>
         </div>
         
-        <!-- Natural Progression Banner -->
-        <div class="progression-banner">
-            <div class="progression-left">
-                <div class="progression-icon">◎</div>
-                <div class="progression-text">
-                    <h3>Each quadrant reinforces the others. Most leaders work on one and wonder why things still feel stuck.</h3>
-                    <p>Browse by category below or view everything together. The order you choose matters less than the decision to continue.</p>
-                </div>
+        <!-- Step 2: Recommended Path -->
+        <div class="recommended-path">
+            <h2>Start Where The Pattern Is Most Visible</h2>
+            <p>Begin where your attention keeps returning. For most leaders, that is Vocation, because performance and identity carry the most visible weight there. Once that layer is steadied, move forward deliberately through the remaining quadrants.</p>
+            <div class="path-buttons">
+                <button class="path-btn" onclick="filterCategory('vocation')"><span class="step-num">1</span> Vocation & Purpose</button>
+                <button class="path-btn" onclick="filterCategory('health')"><span class="step-num">2</span> Health & Wellbeing</button>
+                <button class="path-btn" onclick="filterCategory('relationships')"><span class="step-num">3</span> Love & Relationships</button>
+                <button class="path-btn" onclick="filterCategory('timemoney')"><span class="step-num">4</span> Time & Money Freedom</button>
             </div>
-            <div class="progression-quadrants">
-                <button class="quad-pill relationships" onclick="filterCategory('relationships')">Love & Relationships</button>
-                <button class="quad-pill health" onclick="filterCategory('health')">Health & Wellbeing</button>
-                <button class="quad-pill vocation" onclick="filterCategory('vocation')">Vocation & Purpose</button>
-                <button class="quad-pill timemoney" onclick="filterCategory('timemoney')">Time & Money Freedom</button>
+        </div>
+
+        <!-- Step 3: Multi-booking Nudge -->
+        <div class="multi-booking-nudge">
+            <div class="nudge-text">
+                <h3>Single sessions create insight. Multiple sessions create change.</h3>
+                <p>Leaders who work across more than one quadrant in the same period experience measurably deeper integration. Consider securing two or more sessions now.</p>
+            </div>
+            <div class="nudge-stat">
+                <span class="stat-num">2×</span>
+                <span class="stat-label">deeper integration</span>
             </div>
         </div>
 
@@ -494,10 +441,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">You're More Than Capable—So Why Do You Still Hold Back?</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -509,10 +456,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">Your Ideas Get Softer the More You Read the Room</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -524,10 +471,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">Carrying It All Without Saying Anything? That's Why You're Exhausted.</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -539,10 +486,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">You've Earned It. So Why Do You Keep Delaying the Ask?</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                 </div>
@@ -563,10 +510,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">You Question Yourself Even When There's No Reason To</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -578,10 +525,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">Your Responsibility Keeps Growing. Your Confidence Doesn't. Why?</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -593,10 +540,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">You Ask for Reassurance—But You Don't Fully Trust It When You Get It</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -608,10 +555,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">You Over-Prepare Because Deciding Feels Risky</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                 </div>
@@ -632,10 +579,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">You Care for Everyone Else. What's Left for You?</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -647,10 +594,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">When Support Stops Feeling Like a Choice and Starts Feeling Expected</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -662,10 +609,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">Work Feels Like the Only Place Where Your Value Is Clear</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -677,10 +624,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">Your Time Gets Spent—But You're Not the One Choosing How</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                 </div>
@@ -701,10 +648,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">Money Pressure Feels Personal, Even When It's "Just Business"</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -716,10 +663,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">You Start Measuring Your Worth by Outcomes at This Time of Year</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -731,10 +678,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">Financial Stress Doesn't Show Up in Your Bank Account First—It Shows Up in Your Body</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -746,10 +693,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">EOFY Pressure Changes How You Show Up at Home</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                 </div>
@@ -770,10 +717,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">New Plans, Old Patterns—Why That Keeps Happening</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -785,10 +732,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">Fresh Goals Are Supposed to Feel Motivating. Yours Feel Heavy.</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -800,10 +747,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">You Took Time Off. The Motivation Still Hasn't Come Back.</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -815,10 +762,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">Change Creates Distance Before It Creates Alignment</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                 </div>
@@ -839,10 +786,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">You Finally Have Time to Relax. So Why Can't You?</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -854,10 +801,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">You Stay Busy Even Around the People You Love Most</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -869,10 +816,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">Slowing Down at Work Feels Risky—Even When You Know You Need To</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -884,10 +831,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">Rest Feels Like You're Wasting Time</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                 </div>
@@ -908,10 +855,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">Being the Strong One Makes It Hard to Admit You're Not Okay</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -923,10 +870,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">You Ignore the Signals Until They're Too Loud to Miss</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -938,10 +885,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">When Responsibility Becomes Who You Are, Not Just What You Do</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -953,10 +900,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">You Keep Putting Yourself Last—And You Know It</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                 </div>
@@ -977,10 +924,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">You Function Well on the Outside. Inside? You're Worn Down.</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -992,10 +939,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">Your Confidence Feels Conditional—Even When the Results Say Otherwise</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -1007,10 +954,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">You Hide More Than You Think You Do</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -1022,10 +969,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">You Avoid Looking Too Closely—Because You Already Know What You'll Find</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                 </div>
@@ -1046,10 +993,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">Slowing Down Forces You to Face Questions You've Been Avoiding</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -1061,10 +1008,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">You Keep Deferring What Matters Most—Even Though You Know What It Is</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -1076,10 +1023,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">Stillness Doesn't Feel Peaceful. It Feels Uncomfortable.</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -1091,10 +1038,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">Reflection Feels Isolating When You Do It Alone</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                 </div>
@@ -1115,10 +1062,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">Being Together Can Feel More Draining Than Being Alone</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -1130,10 +1077,10 @@
                                 <span class="context-tag">HOME</span>
                             </div>
                             <h3 class="card-title">You Feel Exhausted Before the Break Even Starts</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -1145,10 +1092,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">Your Achievements Don't Land the Way You Expected Them To</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                     
@@ -1160,10 +1107,10 @@
                                 <span class="context-tag">WORK</span>
                             </div>
                             <h3 class="card-title">Letting Go Feels Harder Than Holding On—Even When Holding On Hurts</h3>
-                        </div>
+                            <p class="card-description">Pairs well with Health &amp; Wellbeing this month.</p></div>
                         <div class="card-action">
                             <div class="price">$97 AUD</div>
-                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="YOUR_EVENTBRITE_URL" target="_blank" class="action-btn eventbrite" onclick="trackRegister(this)">Register Now →</a>
                         </div>
                     </div>
                 </div>
@@ -1172,34 +1119,11 @@
         </div>
     </div>
     
-    <!-- Sticky Cart Summary -->
-    <div class="bundle-summary" id="bundleSummary">
-        <div class="bundle-summary-content">
-            <div class="bundle-info">
-                <div class="bundle-count">
-                    <strong id="cartCount">0</strong> <span id="sessionWord">session</span> added
-                </div>
-                <div class="bundle-count">
-                    Total: <strong id="cartTotal">$0</strong> AUD
-                </div>
-                <div class="bundle-count" id="momentumMsg" style="color: #667eea; font-style: italic;"></div>
-            </div>
-            <button class="checkout-btn" onclick="checkout()">Continue the Work →</button>
-        </div>
-    </div>
+
     
     <script>
-        let cart = [];
-        const pricePerSession = 97;
 
-        const momentumMessages = [
-            "One session builds awareness. Several build change.",
-            "The leaders who see the most shift work across more than one quadrant.",
-            "Continuity is what separates insight from integration.",
-            "Each session you add is a commitment to not stopping at awareness.",
-            "You are building something most people never finish."
-        ];
-
+        // ─── CATEGORY FILTER ──────────────────────────────────────────────────
         function filterCategory(category) {
             document.querySelectorAll('.filter-btn, .quad-pill').forEach(btn => {
                 btn.classList.remove('active');
@@ -1209,62 +1133,23 @@
                     btn.classList.add('active');
                 }
             });
-
             const cards = document.querySelectorAll('.masterclass-card:not(.purchased)');
             cards.forEach(card => {
                 card.style.display = (category === 'all' || card.dataset.category === category) ? 'flex' : 'none';
             });
         }
 
-        function addToCart(button) {
-            const card = button.closest('.masterclass-card');
-            const title = card.querySelector('.card-title').textContent;
-            if (!cart.includes(title)) {
-                cart.push(title);
-                button.textContent = '✓ Added — Remove';
-                button.classList.remove('primary');
-                button.classList.add('added');
-                button.onclick = function() { removeFromCart(this); };
-                updateCartSummary();
-            }
+        // ─── EVENTBRITE TRACKING (OPTIONAL) ──────────────────────────────────
+        // Called when any Register button is clicked.
+        // You can hook this into Google Analytics or any tracking tool.
+        function trackRegister(link) {
+            const card = link.closest('.masterclass-card');
+            const title = card ? card.querySelector('.card-title').textContent : 'Unknown';
+            // Optional: send to analytics
+            // gtag('event', 'register_click', { session_title: title });
+            console.log('Register clicked:', title);
         }
 
-        function removeFromCart(button) {
-            const card = button.closest('.masterclass-card');
-            const title = card.querySelector('.card-title').textContent;
-            const index = cart.indexOf(title);
-            if (index > -1) {
-                cart.splice(index, 1);
-                button.textContent = 'Add to Cart';
-                button.classList.remove('added');
-                button.classList.add('primary');
-                button.onclick = function() { addToCart(this); };
-                updateCartSummary();
-            }
-        }
-
-        function updateCartSummary() {
-            const count = cart.length;
-            const total = count * pricePerSession;
-            const summary = document.getElementById('bundleSummary');
-
-            document.getElementById('cartCount').textContent = count;
-            document.getElementById('cartTotal').textContent = '$' + total;
-            document.getElementById('sessionWord').textContent = count === 1 ? 'session' : 'sessions';
-
-            const msgEl = document.getElementById('momentumMsg');
-            if (count >= 1) {
-                const msg = momentumMessages[Math.min(count - 1, momentumMessages.length - 1)];
-                msgEl.textContent = msg;
-            }
-
-            summary.classList.toggle('active', count > 0);
-        }
-
-        function checkout() {
-            if (cart.length === 0) return;
-            alert('Proceeding to checkout with ' + cart.length + ' session' + (cart.length > 1 ? 's' : '') + '.\n\nTotal: $' + (cart.length * pricePerSession) + ' AUD');
-        }
     </script>
 </body>
 </html>
