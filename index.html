@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Masterclass Calendar - Dean Levick</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #fafafa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* Progression Banner */
+        .progression-banner {
+            background: #f8f7ff;
+            border: 1.5px solid #e0dbff;
+            border-radius: 12px;
+            padding: 28px 36px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .progression-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .progression-icon {
+            font-size: 36px;
+            flex-shrink: 0;
+        }
+
+        .progression-text h3 {
+            font-size: 19px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+
+        .progression-text p {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .progression-quadrants {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quad-pill {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            opacity: 0.85;
+        }
+
+        .quad-pill:hover { opacity: 1; transform: translateY(-1px); }
+        .quad-pill.relationships { background: #fce7f3; color: #be185d; }
+        .quad-pill.health { background: #d1fae5; color: #065f46; }
+        .quad-pill.vocation { background: #fef3c7; color: #92400e; }
+        .quad-pill.timemoney { background: #ede9fe; color: #5b21b6; }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .welcome-badge {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 12px;
+            color: #111;
+        }
+        
+        .header p {
+            font-size: 18px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .filter-btn {
+            padding: 12px 24px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.2s;
+            color: #4b5563;
+        }
+        
+        .filter-btn:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        
+        .filter-btn.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+        
+        .filter-btn.relationships.active { background: #ec4899; border-color: #ec4899; }
+        .filter-btn.health.active { background: #10b981; border-color: #10b981; }
+        .filter-btn.vocation.active { background: #f59e0b; border-color: #f59e0b; }
+        .filter-btn.timemoney.active { background: #8b5cf6; border-color: #8b5cf6; }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+        }
+        
+        .month-group {
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .month-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .month-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111;
+        }
+        
+        .event-badge {
+            background: #f3f4f6;
+            color: #6b7280;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .masterclasses {
+            display: grid;
+            gap: 16px;
+        }
+        
+        /* Masterclass Card */
+        .masterclass-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-left: 4px solid #e5e7eb;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        
+        .masterclass-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        
+        .masterclass-card.relationships { border-left-color: #ec4899; }
+        .masterclass-card.health { border-left-color: #10b981; }
+        .masterclass-card.vocation { border-left-color: #f59e0b; }
+        .masterclass-card.timemoney { border-left-color: #8b5cf6; }
+        
+        .masterclass-card.purchased {
+            background: #f0fdf4;
+            border-left-color: #10b981;
+        }
+        
+        .card-content {
+            flex: 1;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .date-badge {
+            background: #f3f4f6;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4b5563;
+        }
+        
+        .category-tag {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .category-tag.relationships { background: #ec4899; }
+        .category-tag.health { background: #10b981; }
+        .category-tag.vocation { background: #f59e0b; }
+        .category-tag.timemoney { background: #8b5cf6; }
+        
+        .context-tag {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #e5e7eb;
+            color: #4b5563;
+        }
+        
+        .purchased-badge {
+            background: #10b981;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .card-description {
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .card-action {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+        
+        .price-container {
+            text-align: right;
+        }
+        
+        .price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+        
+        .action-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .action-btn.primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .action-btn.primary:hover {
+            background: #2563eb;
+        }
+        
+        .action-btn.purchased {
+            background: #10b981;
+            color: white;
+            cursor: default;
+        }
+        
+        .action-btn.add-bundle {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+        
+        .action-btn.add-bundle:hover {
+            background: #e5e7eb;
+        }
+        
+        .action-btn.added {
+            background: #10b981;
+            color: white;
+        }
+        
+        .action-btn.added:hover {
+            background: #dc2626;
+        }
+        
+        .action-btn.added:hover::after {
+            content: " (Click to Remove)";
+            font-size: 11px;
+        }
+        
+        /* Bundle Summary Sticky */
+        .bundle-summary {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 2px solid #e5e7eb;
+            padding: 20px;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+            display: none;
+            z-index: 100;
+        }
+        
+        .bundle-summary.active {
+            display: block;
+        }
+        
+        .bundle-summary-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .bundle-info {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .bundle-count {
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .bundle-count strong {
+            color: #111;
+            font-size: 18px;
+        }
+        
+        .checkout-btn {
+            padding: 16px 40px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .checkout-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 24px; }
+            .header p { font-size: 16px; }
+            .progression-banner { flex-direction: column; padding: 20px; }
+            .progression-left { flex-direction: column; text-align: center; }
+            .progression-text h3 { font-size: 16px; }
+            .progression-quadrants { justify-content: center; }
+            .masterclass-card { flex-direction: column; }
+            .card-action { align-items: flex-start; width: 100%; }
+            .action-btn { width: 100%; }
+            .bundle-summary-content { flex-direction: column; }
+            .checkout-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="welcome-badge">✓ Love & Relationships Masterclass Purchased</div>
+            <h1>You have already seen what honest examination of one quadrant can do.</h1>
+            <p>Something shifts when you look clearly at one area of your life. Your awareness sharpens. You begin to see patterns that were running quietly in the background. Once you see them, you cannot pretend they are not there. At this point, most leaders mistake insight for completion. These sessions are designed so you continue the work instead of stopping at awareness. Your health shapes how you lead. Your relationships influence how you make decisions. Your vocation affects how you measure your worth. Your time and money choices reinforce all of it. This calendar follows the natural pressure cycles of your year so these intersections are addressed deliberately and at the right moment. If one masterclass gave you clarity, continuity will give you integration. This is how you build momentum instead of losing it.</p>
+        </div>
+        
+        <!-- Category Filter -->
+        <div class="category-filter">
+            <button class="filter-btn all active" onclick="filterCategory('all')">All Masterclasses</button>
+            <button class="filter-btn relationships" onclick="filterCategory('relationships')">Love & Relationships</button>
+            <button class="filter-btn health" onclick="filterCategory('health')">Health & Wellbeing</button>
+            <button class="filter-btn vocation" onclick="filterCategory('vocation')">Vocation & Purpose</button>
+            <button class="filter-btn timemoney" onclick="filterCategory('timemoney')">Time & Money Freedom</button>
+        </div>
+        
+        <!-- Natural Progression Banner -->
+        <div class="progression-banner">
+            <div class="progression-left">
+                <div class="progression-icon">◎</div>
+                <div class="progression-text">
+                    <h3>Each quadrant reinforces the others. Most leaders work on one and wonder why things still feel stuck.</h3>
+                    <p>Browse by category below or view everything together. The order you choose matters less than the decision to continue.</p>
+                </div>
+            </div>
+            <div class="progression-quadrants">
+                <button class="quad-pill relationships" onclick="filterCategory('relationships')">Love & Relationships</button>
+                <button class="quad-pill health" onclick="filterCategory('health')">Health & Wellbeing</button>
+                <button class="quad-pill vocation" onclick="filterCategory('vocation')">Vocation & Purpose</button>
+                <button class="quad-pill timemoney" onclick="filterCategory('timemoney')">Time & Money Freedom</button>
+            </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline" id="timeline">
+            <!-- March -->
+            <div class="month-group" data-month="march">
+                <div class="month-header">
+                    <h2 class="month-title">March</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Mar 16</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">You're More Than Capable—So Why Do You Still Hold Back?</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Mar 16</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Your Ideas Get Softer the More You Read the Room</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Mar 17</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Carrying It All Without Saying Anything? That's Why You're Exhausted.</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Mar 17</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You've Earned It. So Why Do You Keep Delaying the Ask?</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- April -->
+            <div class="month-group" data-month="april">
+                <div class="month-header">
+                    <h2 class="month-title">April</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Apr 15</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">You Question Yourself Even When There's No Reason To</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Apr 15</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Your Responsibility Keeps Growing. Your Confidence Doesn't. Why?</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Thu, Apr 16</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Ask for Reassurance—But You Don't Fully Trust It When You Get It</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Thu, Apr 16</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Over-Prepare Because Deciding Feels Risky</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- May -->
+            <div class="month-group" data-month="may">
+                <div class="month-header">
+                    <h2 class="month-title">May</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, May 18</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Care for Everyone Else. What's Left for You?</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, May 18</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">When Support Stops Feeling Like a Choice and Starts Feeling Expected</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, May 19</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Work Feels Like the Only Place Where Your Value Is Clear</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, May 19</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Your Time Gets Spent—But You're Not the One Choosing How</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- June -->
+            <div class="month-group" data-month="june">
+                <div class="month-header">
+                    <h2 class="month-title">June</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Jun 15</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Money Pressure Feels Personal, Even When It's "Just Business"</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Jun 15</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">You Start Measuring Your Worth by Outcomes at This Time of Year</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Jun 16</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Financial Stress Doesn't Show Up in Your Bank Account First—It Shows Up in Your Body</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Jun 16</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">EOFY Pressure Changes How You Show Up at Home</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- July -->
+            <div class="month-group" data-month="july">
+                <div class="month-header">
+                    <h2 class="month-title">July</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Jul 15</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">New Plans, Old Patterns—Why That Keeps Happening</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Jul 15</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Fresh Goals Are Supposed to Feel Motivating. Yours Feel Heavy.</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Thu, Jul 16</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Took Time Off. The Motivation Still Hasn't Come Back.</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Thu, Jul 16</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Change Creates Distance Before It Creates Alignment</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- August -->
+            <div class="month-group" data-month="august">
+                <div class="month-header">
+                    <h2 class="month-title">August</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Aug 17</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Finally Have Time to Relax. So Why Can't You?</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Aug 17</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Stay Busy Even Around the People You Love Most</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Aug 18</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Slowing Down at Work Feels Risky—Even When You Know You Need To</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Aug 18</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Rest Feels Like You're Wasting Time</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- September -->
+            <div class="month-group" data-month="september">
+                <div class="month-header">
+                    <h2 class="month-title">September</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Sep 15</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Being the Strong One Makes It Hard to Admit You're Not Okay</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Sep 15</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Ignore the Signals Until They're Too Loud to Miss</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Sep 16</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">When Responsibility Becomes Who You Are, Not Just What You Do</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Sep 16</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">You Keep Putting Yourself Last—And You Know It</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- October -->
+            <div class="month-group" data-month="october">
+                <div class="month-header">
+                    <h2 class="month-title">October</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Oct 19</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">You Function Well on the Outside. Inside? You're Worn Down.</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Oct 19</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Your Confidence Feels Conditional—Even When the Results Say Otherwise</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Oct 20</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Hide More Than You Think You Do</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Oct 20</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Avoid Looking Too Closely—Because You Already Know What You'll Find</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- November -->
+            <div class="month-group" data-month="november">
+                <div class="month-header">
+                    <h2 class="month-title">November</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Nov 16</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Slowing Down Forces You to Face Questions You've Been Avoiding</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Mon, Nov 16</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">You Keep Deferring What Matters Most—Even Though You Know What It Is</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Nov 17</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Stillness Doesn't Feel Peaceful. It Feels Uncomfortable.</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Nov 17</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Reflection Feels Isolating When You Do It Alone</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- December -->
+            <div class="month-group" data-month="december">
+                <div class="month-header">
+                    <h2 class="month-title">December</h2>
+                    
+                </div>
+                <div class="masterclasses">
+                    <div class="masterclass-card relationships" data-category="relationships">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Dec 15</span>
+                                <span class="category-tag relationships">Love &amp; Relationships</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">Being Together Can Feel More Draining Than Being Alone</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card health" data-category="health">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Tue, Dec 15</span>
+                                <span class="category-tag health">Health &amp; Wellbeing</span>
+                                <span class="context-tag">HOME</span>
+                            </div>
+                            <h3 class="card-title">You Feel Exhausted Before the Break Even Starts</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card vocation" data-category="vocation">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Dec 16</span>
+                                <span class="category-tag vocation">Vocation &amp; Purpose</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Your Achievements Don't Land the Way You Expected Them To</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="masterclass-card timemoney" data-category="timemoney">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <span class="date-badge">Wed, Dec 16</span>
+                                <span class="category-tag timemoney">Time & Money</span>
+                                <span class="context-tag">WORK</span>
+                            </div>
+                            <h3 class="card-title">Letting Go Feels Harder Than Holding On—Even When Holding On Hurts</h3>
+                        </div>
+                        <div class="card-action">
+                            <div class="price">$97 AUD</div>
+                            <button class="action-btn primary" onclick="addToCart(this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- Sticky Cart Summary -->
+    <div class="bundle-summary" id="bundleSummary">
+        <div class="bundle-summary-content">
+            <div class="bundle-info">
+                <div class="bundle-count">
+                    <strong id="cartCount">0</strong> <span id="sessionWord">session</span> added
+                </div>
+                <div class="bundle-count">
+                    Total: <strong id="cartTotal">$0</strong> AUD
+                </div>
+                <div class="bundle-count" id="momentumMsg" style="color: #667eea; font-style: italic;"></div>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Continue the Work →</button>
+        </div>
+    </div>
+    
+    <script>
+        let cart = [];
+        const pricePerSession = 97;
+
+        const momentumMessages = [
+            "One session builds awareness. Several build change.",
+            "The leaders who see the most shift work across more than one quadrant.",
+            "Continuity is what separates insight from integration.",
+            "Each session you add is a commitment to not stopping at awareness.",
+            "You are building something most people never finish."
+        ];
+
+        function filterCategory(category) {
+            document.querySelectorAll('.filter-btn, .quad-pill').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.classList.contains(category) || (category === 'all' && btn.classList.contains('all'))) {
+                    btn.classList.add('active');
+                }
+            });
+
+            const cards = document.querySelectorAll('.masterclass-card:not(.purchased)');
+            cards.forEach(card => {
+                card.style.display = (category === 'all' || card.dataset.category === category) ? 'flex' : 'none';
+            });
+        }
+
+        function addToCart(button) {
+            const card = button.closest('.masterclass-card');
+            const title = card.querySelector('.card-title').textContent;
+            if (!cart.includes(title)) {
+                cart.push(title);
+                button.textContent = '✓ Added — Remove';
+                button.classList.remove('primary');
+                button.classList.add('added');
+                button.onclick = function() { removeFromCart(this); };
+                updateCartSummary();
+            }
+        }
+
+        function removeFromCart(button) {
+            const card = button.closest('.masterclass-card');
+            const title = card.querySelector('.card-title').textContent;
+            const index = cart.indexOf(title);
+            if (index > -1) {
+                cart.splice(index, 1);
+                button.textContent = 'Add to Cart';
+                button.classList.remove('added');
+                button.classList.add('primary');
+                button.onclick = function() { addToCart(this); };
+                updateCartSummary();
+            }
+        }
+
+        function updateCartSummary() {
+            const count = cart.length;
+            const total = count * pricePerSession;
+            const summary = document.getElementById('bundleSummary');
+
+            document.getElementById('cartCount').textContent = count;
+            document.getElementById('cartTotal').textContent = '$' + total;
+            document.getElementById('sessionWord').textContent = count === 1 ? 'session' : 'sessions';
+
+            const msgEl = document.getElementById('momentumMsg');
+            if (count >= 1) {
+                const msg = momentumMessages[Math.min(count - 1, momentumMessages.length - 1)];
+                msgEl.textContent = msg;
+            }
+
+            summary.classList.toggle('active', count > 0);
+        }
+
+        function checkout() {
+            if (cart.length === 0) return;
+            alert('Proceeding to checkout with ' + cart.length + ' session' + (cart.length > 1 ? 's' : '') + '.\n\nTotal: $' + (cart.length * pricePerSession) + ' AUD');
+        }
+    </script>
+</body>
+</html>
